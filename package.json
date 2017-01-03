@@ -1,0 +1,24 @@
+{
+  "name": "factcheckthe.news",
+  "version": "1.0.0",
+  "description": "Website for factcheckthe.news",
+  "scripts": {
+    "serve": "$(npm bin)/http-server src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/factcheckthenews/website.git"
+  },
+  "keywords": [
+    "factcheckthe.news"
+  ],
+  "author": "Fact Check the News",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/factcheckthenews/website/issues"
+  },
+  "homepage": "https://github.com/factcheckthenews/website#readme",
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}

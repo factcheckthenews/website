@@ -1,0 +1,122 @@
+<!doctype html>
+<html ⚡>
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <link rel="canonical" href="https://factcheckthe.news">
+  <link href="https://fonts.googleapis.com/css?family=Lora:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <style amp-custom>
+    nav {
+      text-align: center;
+      font-family: 'Lora', serif;
+      font-size: 24pt;
+    }
+
+    .container, footer {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    p, footer { font-family: Roboto,Helvetica,Arial,sans-serif; }
+    footer { font-size: 10pt; }
+
+    input[type=text] {
+      font-family: Roboto,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      margin: 0 0 16px;
+      width: 50%;
+      height: 36px;
+      text-align: left;
+      color: inherit;
+      outline: 0;
+    }
+
+    .button {
+      background: 0 0;
+      border: none;
+      border-radius: 2px;
+      height: 36px;
+      margin: 0;
+      min-width: 64px;
+      padding: 0 16px;
+      display: inline-block;
+      font-family: Roboto,Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      will-change: box-shadow;
+      transition: 
+        box-shadow .2s cubic-bezier(.4,0,1,1),
+        background-color .2s cubic-bezier(.4,0,.2,1),
+        color .2s cubic-bezier(.4,0,.2,1);
+      outline: 0;
+      text-align: center;
+      line-height: 36px;
+    }
+
+    .button-primary {
+      color: #fff;
+      background-color: #66cc66;
+      box-shadow: 
+        0 2px 2px 0 rgba(0,0,0,.14), 
+        0 3px 1px -2px rgba(0,0,0,.2), 
+        0 1px 5px 0 rgba(0,0,0,.12);
+    }
+
+  </style>
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+</head>
+<body>
+  <nav>
+    <amp-img width="24" height="24"
+      src="data:image/png;base64,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">
+  </amp-img>
+  Fact Check the News
+  </nav>
+
+  <div class="container">
+    <p>This tool processes public Internet content and scores it for "truthiness".</p>
+    <form method="post" target="_top"
+        action-xhr="https://api.factcheckthe.news/v1/check">
+      <input type="text" class="data-input" name="url" required
+        placeholder="Paste a link to an article and click the check button">
+      <input type="submit" value="Check" class="button button-primary">
+
+      <div submit-success>
+        <template type="amp-mustache">
+          Success!
+        </template>
+      </div>
+
+      <div submit-error>
+        <template type="amp-mustache">
+          Error!
+        </template>
+      </div>
+    </form>
+  </div>
+
+  <amp-analytics type="googleanalytics" id="analytics">
+    <script type="application/json">
+    {
+      "vars": {
+        "account": "UA-89707859-1"
+      },
+      "triggers": {
+        "trackPageview": {
+          "on": "visible",
+          "request": "pageview"
+        }
+      }
+    }
+    </script>
+  </amp-analytics>
+</body>
+</html>
