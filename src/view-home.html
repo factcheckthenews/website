@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="view-home">
@@ -8,10 +10,27 @@
         display: block;
         padding: 10px;
       }
+      paper-input {
+        color: #66cc66;
+        margin-bottom: 20px;
+      }
+
+      paper-button {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        background-color: #66cc66;
+      }
     </style>
 
     <div class="card">
-      <p>TODO: Form input here.</p>
+      <form>
+        <paper-input required auto-validate 
+          error-message="Please enter a valid URL!"
+          label="Paste link to article"></paper-input>
+        <paper-button raised>Check it</paper-button>
+      </form>
     </div>
   </template>
 
