@@ -26,9 +26,11 @@
         {{ result.score }}
       </p>
 
-      <p><label>Red Flags:</label>
-        {{ result.meta.opensources.redFlag }}
-      </p>
+      <template is="dom-if" if="{{ result.meta.opensources.redFlag }}">
+        <p><label>Red Flags:</label>
+        {{ result.meta.opensources.redFlag.type }}
+        </p>
+      </template>
 
       <p><label>Known credible source:</label>
         {{ result.meta.opensources.credible }}
