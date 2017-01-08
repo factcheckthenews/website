@@ -1,0 +1,134 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="app-icons.html">
+
+<dom-module id="factcheckthenews-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #fff;
+        --app-secondary-color: black;
+
+        display: block;
+      }
+
+      app-header {
+        color: black;
+        background-color: var(--app-primary-color);
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      app-toolbar {
+        font-family: 'Lora', serif;
+      }
+      app-toolbar div[main-title] {
+        margin-left: 5px;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed force-narrow>
+      <!-- Drawer content -->
+      <app-drawer id="drawer">
+        <app-toolbar>Fact Check the News</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="/home">Home</a>
+          <a name="about" href="/about">About</a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="app-icons:menu" drawer-toggle></paper-icon-button>
+            <img width="24" height="24"
+                src="data:image/png;base64,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">
+            <div main-title>Fact Check the News</div>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="404"
+            role="main">
+          <view-home name="home"></view-home>
+          <view-about name="about"></view-about>
+          <view-404 name="404"></view-404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'factcheckthenews-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      },
+
+      _pageChanged: function(page) {
+        var resolvedPageUrl = this.resolveUrl('view-' + page + '.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _showPage404: function() {
+        this.page = '404';
+      },
+    });
+  </script>
+</dom-module>

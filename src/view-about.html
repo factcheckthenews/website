@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="view-about">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h1>About this Project</h1>
+      <p>Fact Check the News is a project created with the goal of using existing technology to flag the trustworthiness of content based on open criteria. This project is open source to allow for both transparency and open discourse on the <a href="https://github.com/factcheckthenews/heuristics">scoring criteria</a>.</p>
+      <p>This project is still in its infancy, but the immediate goal is to provide a proof of concept that could be used to mitigate the spread of false information on the Internet.</p>
+
+      <h3>Addressing "Fake News"</h3>
+
+      <p>Prior to the Internet, unethical news spread in printed media for hundreds of years before the existence of web sites. <a href="https://en.wikipedia.org/wiki/Yellow_journalism">Yellow journalism</a>, reporting from a standard which is devoid of morals and professional ethics, was pervasive during the time period in history known as the <a href="https://en.wikipedia.org/wiki/Gilded_Age">Gilded Age</a>, and unethical journalists would engage in fraud by fabricating stories, interviews, and made-up names for scholars out of whole cloth. <a href="http://www.pri.org/stories/2016-12-08/long-and-tawdry-history-yellow-journalism-america">During the 1890s the spread of this unethical news sparked violence and conflicts.</a></p>
+      
+      <p>With the invention of the Internet, we now have social networks and search engines that give us instant access to information, but there is little guarantee that the information we find is true.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Fake_news_website">Fake news websites</a> deliberately publish hoaxes, propaganda, and disinformation, using social media to drive web traffic and amplify their effect.</p>
+      <ul>
+        <li><a href="http://www.nytimes.com/2016/12/06/us/fake-news-partisan-republican-democrat.html">The New York Times</a> defined "fake news" on the Internet as fictitious articles deliberately fabricated to deceive readers, generally with the goal of profiting through clickbait.</li>
+        <li><a href="http://www.politifact.com/truth-o-meter/article/2016/dec/13/2016-lie-year-fake-news/">PolitiFact</a> described fake news as fabricated content designed to fool readers and subsequently made viral through the Internet to crowds that increase its dissemination.</li>
+      </ul>
+
+      <h3>Suggestions</h3>
+      <p>Please file a <a href="https://github.com/factcheckthenews/website/issues">GitHub issue</a>.</p>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'view-about',
+    });
+  </script>
+</dom-module>

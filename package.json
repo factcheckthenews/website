@@ -1,24 +1,15 @@
 {
-  "name": "factcheckthe.news",
-  "version": "1.0.0",
-  "description": "Website for factcheckthe.news",
-  "scripts": {
-    "serve": "$(npm bin)/http-server src"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/factcheckthenews/website.git"
-  },
-  "keywords": [
-    "factcheckthe.news"
-  ],
-  "author": "Fact Check the News",
+  "name": "website",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/factcheckthenews/website/issues"
-  },
-  "homepage": "https://github.com/factcheckthenews/website#readme",
   "devDependencies": {
-    "http-server": "^0.9.0"
+    "eslint": "^3.12.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-html": "^1.7.0"
+  },
+  "scripts": {
+    "lint": "eslint . --ext js,html; exit 0;",
+    "test": "npm run lint && polymer test",
+    "build": "polymer build",
+    "serve": "polymer serve"
   }
 }

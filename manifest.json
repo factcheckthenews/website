@@ -1,0 +1,20 @@
+{
+  "name": "Fact Check the News",
+  "short_name": "Fact Check",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#66cc66",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "images/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/manifest/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
