@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="result-card.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="view-home">
@@ -25,18 +27,35 @@
     </style>
 
     <div class="card">
-      <form>
-        <paper-input required auto-validate 
-          error-message="Please enter a valid URL!"
-          label="Paste link to article"></paper-input>
-        <paper-button raised>Check it</paper-button>
-      </form>
+      <paper-input id="articleUrl" required auto-validate 
+        error-message="Please enter a valid URL!"
+        label="Paste link to article"></paper-input>
+      <paper-button id="checkButton" raised>Check it</paper-button>
     </div>
+
+    <iron-ajax auto url="{{ apiUrl }}" handle-as="json" last-response="{{ apiResponse }}"></iron-ajax>
+    <result-card id="resultCard" result="{{ apiResponse }}"></result-card>
   </template>
 
   <script>
     Polymer({
       is: 'view-home',
+      properties: {
+        apiUrl: { type: String },
+        apiResponse: { type: Object }
+      },
+      callApi: function(e) {
+        const baseUrl = 'https://api.factcheckthe.news/v1/check'
+        const url = this.$.articleUrl.value;
+        // Setting apiUrl triggers the API request using the iron-ajax auto property
+        this.apiUrl = baseUrl + "?url=" + url;
+        // Make result visible
+        this.$.resultCard.makeVisible();
+      },
+      ready: function() {
+        // Bind the checkButton tap event to custom handler
+        this.listen(this.$.checkButton, 'tap', 'callApi')
+      }
     });
   </script>
 </dom-module>

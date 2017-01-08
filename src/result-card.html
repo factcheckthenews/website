@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="result-card">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      p {
+        word-wrap: break-word;
+      }
+    </style>
+
+    <div id="resultContainer" class="card" hidden="{{hidden}}">
+      <p><label>Article:</label>
+        <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
+      </p>
+
+      <p><label>Score:</label>
+        {{ result.score }}
+      </p>
+
+      <p><label>Red Flags:</label>
+        {{ result.meta.opensources.redFlag }}
+      </p>
+
+      <p><label>Known credible source:</label>
+        {{ result.meta.opensources.credible }}
+      </p>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'result-card',
+      properties: {
+        result: {
+          type: Object,
+          value: null
+        },
+        hidden: {
+          type: Boolean,
+          value: true
+        }
+      },
+      makeVisible: function() {
+        this.hidden = false
+      },
+      toggleVisibility: function() {
+        this.hidden = !this.hidden;
+      }
+    });
+  </script>
+</dom-module>
