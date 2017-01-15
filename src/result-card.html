@@ -26,14 +26,14 @@
         {{ result.score }}
       </p>
 
-      <template is="dom-if" if="{{ result.meta.opensources.redFlag }}">
+      <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
         <p><label>Red Flags:</label>
-        {{ result.meta.opensources.redFlag.type }}
+        {{ result.criteria.opensources.type }}
         </p>
       </template>
 
       <p><label>Known credible source:</label>
-        {{ result.meta.opensources.credible }}
+        {{ result.criteria.opensources.credible }}
       </p>
     </div>
   </template>
