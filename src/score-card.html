@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="report/score-opensources.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="score-card">
@@ -10,7 +9,7 @@
       }
 
       label {
-        font-weight: bold;
+        margin-right: 5px;
       }
 
       p {
@@ -23,15 +22,43 @@
       <p><label>Article:</label>
         <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
       </p>
+
       <p><label>Score:</label>
         {{ result.score }}
       </p>
-    </div>
 
-    <div class="card" hidden="{{hidden}}">
-      <h3>Score Details</h3>
-      <!-- Each score criterion will have their own custom element -->
-      <score-opensources score="{{ result.criteria.opensources }}">
+      <hr>
+
+      <!-- HTTPS Score -->
+      <template is="dom-if" if="{{ !result.criteria.https }}">
+        <p><label>⚠️️</label>
+        This content is insecure.
+        Without using HTTPS, this content could be modified by a malicious 3rd party.
+        </p>
+      </template>
+
+      <template is="dom-if" if="{{ result.criteria.https }}">
+        <p><label>✅</label>
+          This content is served using a secure connection.
+        </p>
+      </template>
+
+      <!-- OpenSources Score -->
+      <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
+        <p><label>⚠️️</label>
+        This content has been flagged by <a href="http://www.opensources.co/">OpenSources</a>
+        as {{ result.criteria.opensources.type }}.</p>
+      </template>
+
+      <template is="dom-if" if="{{ !result.criteria.opensources.flag }}">
+        <p><label>✅</label>
+          No issues have been reported.
+          If you believe there are credibility issues with this source,
+          please report them to <a href="http://www.opensources.co/">OpenSources</a>.
+        </p>
+      </template>
+      
+      <!-- End Report Card -->
     </div>
     
   </template>
