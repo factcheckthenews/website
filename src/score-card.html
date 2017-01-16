@@ -1,7 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="report/score-opensources.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="result-card">
+<dom-module id="score-card">
   <template>
     <style include="shared-styles">
       :host {
@@ -17,30 +18,27 @@
       }
     </style>
 
-    <div id="resultContainer" class="card" hidden="{{hidden}}">
+    <div class="card" hidden="{{hidden}}">
+      <h3>Summary</h3>
       <p><label>Article:</label>
         <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
       </p>
-
       <p><label>Score:</label>
         {{ result.score }}
       </p>
-
-      <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
-        <p><label>Red Flags:</label>
-        {{ result.criteria.opensources.type }}
-        </p>
-      </template>
-
-      <p><label>Known credible source:</label>
-        {{ result.criteria.opensources.credible }}
-      </p>
     </div>
+
+    <div class="card" hidden="{{hidden}}">
+      <h3>Score Details</h3>
+      <!-- Each score criterion will have their own custom element -->
+      <score-opensources score="{{ result.criteria.opensources }}">
+    </div>
+    
   </template>
 
   <script>
     Polymer({
-      is: 'result-card',
+      is: 'score-card',
       properties: {
         result: {
           type: Object,

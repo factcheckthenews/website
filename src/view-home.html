@@ -2,7 +2,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="result-card.html">
+<link rel="import" href="score-card.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="view-home">
@@ -34,7 +34,7 @@
     </div>
 
     <iron-ajax auto url="{{ apiUrl }}" handle-as="json" last-response="{{ apiResponse }}"></iron-ajax>
-    <result-card id="resultCard" result="{{ apiResponse }}"></result-card>
+    <score-card id="resultCard" result="{{ apiResponse }}"></result-card>
   </template>
 
   <script>
