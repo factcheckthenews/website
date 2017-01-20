@@ -29,10 +29,12 @@
 
       <hr>
 
+      <h3>Credibility Checklist:</h3>
+
       <!-- HTTPS Score -->
       <template is="dom-if" if="{{ !result.criteria.https }}">
         <p><label>⚠️️</label>
-        This content is insecure.
+        This website is insecure.
         Without using HTTPS, this content could be modified by a malicious 3rd party.
         </p>
       </template>
@@ -57,7 +59,42 @@
           please report them to <a href="http://www.opensources.co/">OpenSources</a>.
         </p>
       </template>
-      
+
+      <!-- Web of Trust Result -->
+      <p>
+        <template is="dom-if" 
+          if="{{ _displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+          <label>⚠️️</label>
+        </template>
+        <template is="dom-if" 
+          if="{{ !_displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+          <label>✅</label>
+        </template>
+        <a href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
+        {{ result.criteria.webOfTrust.trustworthiness.description }}.
+      </p>
+
+      <!-- Web of Trust Categories -->
+      <template is="dom-if" if="{{ _displayWOTCategories(result.criteria.webOfTrust.categories) }}">
+        <p>
+          <template is="dom-if" 
+            if="{{ _displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+            <label>⚠️️</label>
+          </template>
+          <template is="dom-if" 
+            if="{{ !_displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+            <label>✅</label>
+          </template>
+          Users have also categorized this site as:
+        </p>
+
+        <ul>
+          <template is="dom-repeat" items="{{ result.criteria.webOfTrust.categories }}">
+          <li>{{ item }}</li>
+          </template>
+        </ul>
+      </template>
+
       <!-- End Report Card -->
     </div>
     
@@ -81,6 +118,12 @@
       },
       toggleVisibility: function() {
         this.hidden = !this.hidden;
+      },
+      _displayWOTWarning: function(reputation) {
+        return (reputation < 60);
+      },
+      _displayWOTCategories: function(categories) {
+        return (categories && categories.length > 0);
       }
     });
   </script>
