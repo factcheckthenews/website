@@ -33,7 +33,9 @@
       <paper-button id="checkButton" raised>Check it</paper-button>
     </div>
 
-    <iron-ajax auto url="{{ apiUrl }}" handle-as="json" last-response="{{ apiResponse }}"></iron-ajax>
+    <iron-ajax auto url="{{ apiUrl }}" handle-as="json"
+      on-response="makeVisible"
+      last-response="{{ apiResponse }}"></iron-ajax>
     <score-card id="resultCard" result="{{ apiResponse }}"></result-card>
   </template>
 
@@ -49,6 +51,8 @@
         const url = this.$.articleUrl.value;
         // Setting apiUrl triggers the API request using the iron-ajax auto property
         this.apiUrl = baseUrl + "?url=" + url;
+      },
+      makeVisible: function() {
         // Make result visible
         this.$.resultCard.makeVisible();
       },
