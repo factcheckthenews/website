@@ -94,6 +94,25 @@
         </ul>
       </template>
 
+      <template is="dom-if" if="{{ result.criteria.slander.flag }}">
+        <label>⚠️️</label>
+        This content uses known partisan slander terms from
+        <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+        Oxford Dictionary's New Words Corpus</a>.
+
+        <ul>
+          <template is="dom-repeat" items="{{ result.criteria.slander.keywords }}">
+          <li><i>{{ item.term }}</i> is commonly used to slander {{ item.label }}</li>
+          </template>
+        </ul>
+      </template>
+
+      <template is="dom-if" if="{{ !result.criteria.slander.flag }}">
+        <label>✅</label>
+        This content does not use known partisan slander terms from
+        <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+        Oxford Dictionary's New Words Corpus</a>.
+      </template>
       <!-- End Report Card -->
     </div>
     
