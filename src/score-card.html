@@ -49,7 +49,7 @@
       <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
         <p><label>⚠️️</label>
         This content has been flagged by <a href="http://www.opensources.co/">OpenSources</a>
-        as {{ result.criteria.opensources.type }}.</p>
+        as <i>{{ result.criteria.opensources.type }}</i>.</p>
       </template>
 
       <template is="dom-if" if="{{ !result.criteria.opensources.flag }}">
@@ -94,7 +94,9 @@
         </ul>
       </template>
 
+      <!-- Slander Terms -->
       <template is="dom-if" if="{{ result.criteria.slander.flag }}">
+        <p>
         <label>⚠️️</label>
         This content uses known partisan slander terms from
         <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
@@ -105,14 +107,46 @@
           <li><i>{{ item.term }}</i> is commonly used to slander {{ item.label }}</li>
           </template>
         </ul>
+        </p>
       </template>
 
       <template is="dom-if" if="{{ !result.criteria.slander.flag }}">
-        <label>✅</label>
-        This content does not use known partisan slander terms from
-        <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
-        Oxford Dictionary's New Words Corpus</a>.
+        <p><label>✅</label>
+          This content does not use known partisan slander terms from
+          <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+          Oxford Dictionary's New Words Corpus</a>.
+        </p>
       </template>
+
+      <!-- Excessive Capitalization -->
+      <template is="dom-if" if="{{ result.criteria.excessiveCaps.title.flag }}">
+        <p><label>⚠️️</label>
+        {{ result.criteria.excessiveCaps.title.uppercase }} of the words in the headline 
+        ({{ result.criteria.excessiveCaps.title.percent }}%) are all uppercase.
+    
+        This is an indicator that the article was not proofread or contains sensational claims.
+        </p>
+      </template>
+
+      <template is="dom-if" if="{{ !result.criteria.excessiveCaps.title.flag }}">
+        <p><label>✅</label>
+          This headline does not use unnecessary capitalization.
+        </p>
+      </template>
+
+      <!-- Excessive Punctuation -->
+      <template is="dom-if" if="{{ result.criteria.punctuation.flag }}">
+        <p><label>⚠️️</label>
+          Headlines that use unnecessary exclamation marks tend to be clickbait.
+        </p>
+      </template>
+
+      <template is="dom-if" if="{{ !result.criteria.punctuation.flag }}">
+        <p><label>✅</label>
+          This headline does not use unnecessary punctuation.
+        </p>
+      </template>
+
       <!-- End Report Card -->
     </div>
     
