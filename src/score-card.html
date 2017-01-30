@@ -24,7 +24,7 @@
       </p>
 
       <p><label>Score:</label>
-        {{ result.score }}
+        There is a {{ result.score }}% chance that this is a credible source of information.
       </p>
 
       <hr>
@@ -35,7 +35,7 @@
       <template is="dom-if" if="{{ !result.criteria.https }}">
         <p><label>⚠️️</label>
         This website is insecure.
-        Without using HTTPS, this content could be modified by a malicious 3rd party.
+        Without HTTPS, the content could be modified by a malicious 3rd party.
         </p>
       </template>
 
@@ -62,29 +62,29 @@
       <!-- Web of Trust Result -->
       <p>
         <template is="dom-if" 
-          if="{{ _displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+          if="{{ _displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
           <label>⚠️️</label>
         </template>
         <template is="dom-if" 
-          if="{{ !_displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+          if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
           <label>✅</label>
         </template>
         <a href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
-        <i>{{ result.criteria.webOfTrust.trustworthiness.description }}</i>.
+        <i>{{ result.criteria.webOfTrust.description }}</i>.
       </p>
 
       <!-- Web of Trust Categories -->
       <template is="dom-if" if="{{ _displayWOTCategories(result.criteria.webOfTrust.categories) }}">
         <p>
           <template is="dom-if" 
-            if="{{ _displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+            if="{{ _displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
             <label>⚠️️</label>
           </template>
           <template is="dom-if" 
-            if="{{ !_displayWOTWarning(result.criteria.webOfTrust.trustworthiness.reputation) }}">
+            if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
             <label>✅</label>
           </template>
-          Users have also categorized this site as:
+          Users have categorized this site as:
         </p>
 
         <ul>
@@ -119,16 +119,16 @@
       </template>
 
       <!-- Excessive Capitalization -->
-      <template is="dom-if" if="{{ result.criteria.excessiveCaps.title.flag }}">
+      <template is="dom-if" if="{{ result.criteria.capitalization.title.flag }}">
         <p><label>⚠️️</label>
-        {{ result.criteria.excessiveCaps.title.uppercase }} of the words in the headline 
-        ({{ result.criteria.excessiveCaps.title.percent }}%) are all uppercase.
+        {{ result.criteria.capitalization.title.uppercase }} of the words in the headline 
+        ({{ result.criteria.capitalization.title.percent }}%) are all uppercase.
     
         This is an indicator that the article was not proofread or contains sensational claims.
         </p>
       </template>
 
-      <template is="dom-if" if="{{ !result.criteria.excessiveCaps.title.flag }}">
+      <template is="dom-if" if="{{ !result.criteria.capitalization.title.flag }}">
         <p><label>✅</label>
           This headline does not use unnecessary capitalization.
         </p>
@@ -143,7 +143,7 @@
 
       <template is="dom-if" if="{{ !result.criteria.punctuation.flag }}">
         <p><label>✅</label>
-          This headline does not use unnecessary punctuation.
+          This headline does not use unnecessary punctuation to gain attention.
         </p>
       </template>
 
