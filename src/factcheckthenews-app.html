@@ -1,15 +1,16 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="app-icons.html">
 
 <dom-module id="factcheckthenews-app">
@@ -93,11 +94,17 @@
           <view-about name="about"></view-about>
           <view-404 name="404"></view-404>
         </iron-pages>
+
+        <paper-toast id="toast" text="factcheckthe.news is now available offline!"></paper-toast>
       </app-header-layout>
     </app-drawer-layout>
+
+    <google-analytics key="UA-89707859-1"></google-analytics>
   </template>
 
   <script>
+    window.performance && performance.mark && performance.mark('factcheckthenews-app.register');
+
     Polymer({
       is: 'factcheckthenews-app',
 
@@ -113,17 +120,51 @@
         '_routePageChanged(routeData.page)',
       ],
 
+      created: function() {
+        window.performance && performance.mark && performance.mark('factcheckthenews-app.created');
+      },
+
+      ready: function() {
+        window.performance && performance.mark && performance.mark('factcheckthenews-app.ready');
+      },
+
+      _lazyLoader: function() {
+        if (!this.loadComplete) {
+          Polymer.RenderStatus.afterNextRender(this, function() {
+            this.importHref(this.resolveUrl('lazy-load.html'), function() {
+              this._installServiceWorker(this.$.toast);
+              this.loadComplete = true;
+            });
+          });
+        }
+      },
+
+      _installServiceWorker: function(toast) {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
+            reg.onupdatefound = function() {
+              var installingWorker = reg.installing;
+              installingWorker.onstatechange = function() {
+                if (installingWorker.state == 'installed') { toast.open() }
+              }
+            }
+          }).catch(function(e) {
+            console.error('Error during service worker registration:', e);
+          });
+        }
+      },
+
       _routePageChanged: function(page) {
         this.page = page || 'home';
-
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
-        }
       },
 
       _pageChanged: function(page) {
         var resolvedPageUrl = this.resolveUrl('view-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
+
+        if (page === 'home') {
+          this._lazyLoader();
+        }
       },
 
       _showPage404: function() {
