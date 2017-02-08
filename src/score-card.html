@@ -23,58 +23,51 @@
         <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
       </p>
 
-      <p><label>Score:</label>
-        There is a {{ result.score }}% chance that this is a credible source of information.
-      </p>
-
-      <hr>
-
-      <h3>Credibility Checklist:</h3>
-
-      <!-- HTTPS Score -->
-      <template is="dom-if" if="{{ !result.criteria.https }}">
-        <p><label>⚠️️</label>
-        This website is insecure.
-        Without HTTPS, the content could be modified by a malicious 3rd party.
+      <template is="dom-if" if="{{ result.error }}">
+        <p><label>Error:</label>
+          This link could not be processed.
+          Please check the URL and try again.
         </p>
       </template>
 
-      <template is="dom-if" if="{{ result.criteria.https }}">
-        <p><label>✅</label>
-          This content is served using a secure connection.
+      <template is="dom-if" if="{{ !result.error }}">
+        <p><label>Score:</label>
+          There is a {{ result.score }}% chance that this is a credible source of information.
         </p>
-      </template>
 
-      <!-- OpenSources Score -->
-      <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
-        <p><label>⚠️️</label>
-        This content has been flagged by <a href="http://www.opensources.co/">OpenSources</a>
-        as <i>{{ result.criteria.opensources.type }}</i>.</p>
-      </template>
+        <hr>
 
-      <template is="dom-if" if="{{ !result.criteria.opensources.flag }}">
-        <p><label>✅</label>
-          <a href="http://www.opensources.co/">OpenSources</a> does not report issues with this source.
-          If you believe there are credibility issues, please report them.
-        </p>
-      </template>
+        <h3>Credibility Checklist:</h3>
 
-      <!-- Web of Trust Result -->
-      <p>
-        <template is="dom-if" 
-          if="{{ _displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
-          <label>⚠️️</label>
+        <!-- HTTPS Score -->
+        <template is="dom-if" if="{{ !result.criteria.https }}">
+          <p><label>⚠️️</label>
+          This website is insecure.
+          Without HTTPS, the content could be modified by a malicious 3rd party.
+          </p>
         </template>
-        <template is="dom-if" 
-          if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
-          <label>✅</label>
-        </template>
-        <a href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
-        <i>{{ result.criteria.webOfTrust.description }}</i>.
-      </p>
 
-      <!-- Web of Trust Categories -->
-      <template is="dom-if" if="{{ _displayWOTCategories(result.criteria.webOfTrust.categories) }}">
+        <template is="dom-if" if="{{ result.criteria.https }}">
+          <p><label>✅</label>
+            This content is served using a secure connection.
+          </p>
+        </template>
+
+        <!-- OpenSources Score -->
+        <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
+          <p><label>⚠️️</label>
+          This content has been flagged by <a href="http://www.opensources.co/">OpenSources</a>
+          as <i>{{ result.criteria.opensources.type }}</i>.</p>
+        </template>
+
+        <template is="dom-if" if="{{ !result.criteria.opensources.flag }}">
+          <p><label>✅</label>
+            <a href="http://www.opensources.co/">OpenSources</a> does not report issues with this source.
+            If you believe there are credibility issues, please report them.
+          </p>
+        </template>
+
+        <!-- Web of Trust Result -->
         <p>
           <template is="dom-if" 
             if="{{ _displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
@@ -84,70 +77,86 @@
             if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
             <label>✅</label>
           </template>
-          Users have categorized this site as:
+          <a href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
+          <i>{{ result.criteria.webOfTrust.description }}</i>.
         </p>
 
-        <ul>
-          <template is="dom-repeat" items="{{ result.criteria.webOfTrust.categories }}">
-          <li>{{ item }}</li>
-          </template>
-        </ul>
-      </template>
+        <!-- Web of Trust Categories -->
+        <template is="dom-if" if="{{ _displayWOTCategories(result.criteria.webOfTrust.categories) }}">
+          <p>
+            <template is="dom-if" 
+              if="{{ _displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
+              <label>⚠️️</label>
+            </template>
+            <template is="dom-if" 
+              if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
+              <label>✅</label>
+            </template>
+            Users have categorized this site as:
+          </p>
 
-      <!-- Slander Terms -->
-      <template is="dom-if" if="{{ result.criteria.slander.flag }}">
-        <p>
-        <label>⚠️️</label>
-        This content uses known partisan slander terms from
-        <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
-        Oxford Dictionary's New Words Corpus</a>.
+          <ul>
+            <template is="dom-repeat" items="{{ result.criteria.webOfTrust.categories }}">
+            <li>{{ item }}</li>
+            </template>
+          </ul>
+        </template>
 
-        <ul>
-          <template is="dom-repeat" items="{{ result.criteria.slander.keywords }}">
-          <li><i>{{ item.term }}</i> is commonly used to slander {{ item.label }}</li>
-          </template>
-        </ul>
-        </p>
-      </template>
-
-      <template is="dom-if" if="{{ !result.criteria.slander.flag }}">
-        <p><label>✅</label>
-          This content does not use known partisan slander terms from
+        <!-- Slander Terms -->
+        <template is="dom-if" if="{{ result.criteria.slander.flag }}">
+          <p>
+          <label>⚠️️</label>
+          This content uses known partisan slander terms from
           <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
           Oxford Dictionary's New Words Corpus</a>.
-        </p>
-      </template>
 
-      <!-- Excessive Capitalization -->
-      <template is="dom-if" if="{{ result.criteria.capitalization.title.flag }}">
-        <p><label>⚠️️</label>
-        {{ result.criteria.capitalization.title.uppercase }} of the words in the headline 
-        ({{ result.criteria.capitalization.title.percent }}%) are all uppercase.
-    
-        This is an indicator that the article was not proofread or contains sensational claims.
-        </p>
-      </template>
+          <ul>
+            <template is="dom-repeat" items="{{ result.criteria.slander.keywords }}">
+            <li><i>{{ item.term }}</i> is commonly used to slander {{ item.label }}</li>
+            </template>
+          </ul>
+          </p>
+        </template>
 
-      <template is="dom-if" if="{{ !result.criteria.capitalization.title.flag }}">
-        <p><label>✅</label>
-          This headline does not use unnecessary capitalization.
-        </p>
-      </template>
+        <template is="dom-if" if="{{ !result.criteria.slander.flag }}">
+          <p><label>✅</label>
+            This content does not use known partisan slander terms from
+            <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+            Oxford Dictionary's New Words Corpus</a>.
+          </p>
+        </template>
 
-      <!-- Excessive Punctuation -->
-      <template is="dom-if" if="{{ result.criteria.punctuation.flag }}">
-        <p><label>⚠️️</label>
-          Headlines that use unnecessary exclamation marks tend to be clickbait.
-        </p>
-      </template>
+        <!-- Excessive Capitalization -->
+        <template is="dom-if" if="{{ result.criteria.capitalization.title.flag }}">
+          <p><label>⚠️️</label>
+          {{ result.criteria.capitalization.title.uppercase }} of the words in the headline 
+          ({{ result.criteria.capitalization.title.percent }}%) are all uppercase.
+      
+          This is an indicator that the article was not proofread or contains sensational claims.
+          </p>
+        </template>
 
-      <template is="dom-if" if="{{ !result.criteria.punctuation.flag }}">
-        <p><label>✅</label>
-          This headline does not use unnecessary punctuation to gain attention.
-        </p>
-      </template>
+        <template is="dom-if" if="{{ !result.criteria.capitalization.title.flag }}">
+          <p><label>✅</label>
+            This headline does not use unnecessary capitalization.
+          </p>
+        </template>
+
+        <!-- Excessive Punctuation -->
+        <template is="dom-if" if="{{ result.criteria.punctuation.flag }}">
+          <p><label>⚠️️</label>
+            Headlines that use unnecessary exclamation marks tend to be clickbait.
+          </p>
+        </template>
+
+        <template is="dom-if" if="{{ !result.criteria.punctuation.flag }}">
+          <p><label>✅</label>
+            This headline does not use unnecessary punctuation to gain attention.
+          </p>
+        </template>
 
       <!-- End Report Card -->
+      </template>
     </div>
     
   </template>
