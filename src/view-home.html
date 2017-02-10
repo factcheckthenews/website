@@ -30,7 +30,7 @@
       <paper-input id="articleUrl" required auto-validate 
         error-message="Please enter a valid URL!"
         label="Paste link to article"></paper-input>
-      <paper-button id="checkButton" raised>Check it</paper-button>
+      <paper-button id="checkButton" raised on-tap="callApi">Check it</paper-button>
     </div>
 
     <iron-ajax auto url="{{ apiUrl }}" handle-as="json"
@@ -55,10 +55,6 @@
       makeVisible: function() {
         // Make result visible
         this.$.resultCard.makeVisible();
-      },
-      ready: function() {
-        // Bind the checkButton tap event to custom handler
-        this.listen(this.$.checkButton, 'tap', 'callApi')
       }
     });
   </script>

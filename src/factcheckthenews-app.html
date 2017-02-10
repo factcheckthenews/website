@@ -160,11 +160,11 @@
 
       _pageChanged: function(page) {
         var resolvedPageUrl = this.resolveUrl('view-' + page + '.html');
-        this.importHref(resolvedPageUrl, null, this._showPage404, true);
-
-        if (page === 'home') {
-          this._lazyLoader();
-        }
+        this.importHref(resolvedPageUrl, function() {
+          if (page === 'home') {
+            this._lazyLoader();
+          }
+        }, this._showPage404, true);
       },
 
       _showPage404: function() {
