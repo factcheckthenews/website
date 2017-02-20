@@ -32,7 +32,13 @@
 
       <template is="dom-if" if="{{ !result.error }}">
         <p><label>Score:</label>
-          There is a {{ result.score }}% chance that this is a credible source of information.
+          <template is="dom-if" if="{{ !_isUnknown(result.criteria.webOfTrust.description) }}">
+            There is a {{ result.score }}% chance that this is a credible source of information.
+          </template>
+          <template is="dom-if" if="{{ _isUnknown(result.criteria.webOfTrust.description) }}">
+            ⚠️️ This website has no reputation data, so an accurate score could not be calculated.
+            Based on available data, there is a {{ result.score }}% chance that this is credible source of information.
+          </template>
         </p>
 
         <hr>
@@ -53,16 +59,34 @@
           </p>
         </template>
 
+        <!-- Deceptive Domain -->
+        <template is="dom-if" if="{{ result.criteria.deceptiveDomain }}">
+          <p><label>⚠️️</label>
+          Unreliable sources borrow the credibility of reputable news organizations
+          by <a target="_blank"
+          href="https://securingtomorrow.mcafee.com/consumer/family-safety/what-is-typosquatting/">
+          typo-squatting</a> or using a deceptive domain name.
+          </p>
+        </template>
+
+        <template is="dom-if" if="{{ !result.criteria.deceptiveDomain }}">
+          <p><label>✅</label>
+            This website does not use a deceptive domain.
+          </p>
+        </template>
+
         <!-- OpenSources Score -->
         <template is="dom-if" if="{{ result.criteria.opensources.flag }}">
           <p><label>⚠️️</label>
-          This content has been flagged by <a href="http://www.opensources.co/">OpenSources</a>
+          This content has been flagged by <a target="_blank"
+          href="http://www.opensources.co/">OpenSources</a>
           as <i>{{ result.criteria.opensources.type }}</i>.</p>
         </template>
 
         <template is="dom-if" if="{{ !result.criteria.opensources.flag }}">
           <p><label>✅</label>
-            <a href="http://www.opensources.co/">OpenSources</a> does not report issues with this source.
+            <a target="_blank"
+            href="http://www.opensources.co/">OpenSources</a> does not report issues with this source.
             If you believe there are credibility issues, please report them.
           </p>
         </template>
@@ -77,7 +101,8 @@
             if="{{ !_displayWOTWarning(result.criteria.webOfTrust.reputation) }}">
             <label>✅</label>
           </template>
-          <a href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
+          <a target="_blank"
+          href="https://www.mywot.com/">Web of Trust</a> users have rated the trustworthiness of this source as
           <i>{{ result.criteria.webOfTrust.description }}</i>.
         </p>
 
@@ -106,8 +131,8 @@
         <template is="dom-if" if="{{ result.criteria.slander.flag }}">
           <p>
           <label>⚠️️</label>
-          This content uses known partisan slander terms from
-          <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+          This content uses known partisan insults from
+          <a target="_blank" href="http://blog.oxforddictionaries.com/2014/11/political-insults/">
           Oxford Dictionary's New Words Corpus</a>.
 
           <ul>
@@ -120,8 +145,8 @@
 
         <template is="dom-if" if="{{ !result.criteria.slander.flag }}">
           <p><label>✅</label>
-            This content does not use known partisan slander terms from
-            <a href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
+            This content does not use known partisan insults from
+            <a target="_blank" href="https://en.oxforddictionaries.com/explore/oxford-new-words-corpus">
             Oxford Dictionary's New Words Corpus</a>.
           </p>
         </template>
@@ -185,6 +210,9 @@
       },
       _displayWOTCategories: function(categories) {
         return (categories && categories.length > 0);
+      },
+      _isUnknown: function(description) {
+        return (description === "Unknown");
       }
     });
   </script>
