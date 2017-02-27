@@ -6,9 +6,7 @@
     "src/view-404.html",
     "src/view-home.html",
     "src/score-card.html",
-    "bower_components/paper-input/paper-input.html",
-    "bower_components/paper-button/paper-button.html",
-    "bower_components/iron-ajax/iron-ajax.html"
+    "src/lazy-load.html"
   ],
   "sourceGlobs": [
     "src/**/*",
