@@ -12,6 +12,7 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="app-icons.html">
+<link rel="import" href="lazy-load.html" async>
 
 <dom-module id="factcheckthenews-app">
   <template>
@@ -128,17 +129,6 @@
         window.performance && performance.mark && performance.mark('factcheckthenews-app.ready');
       },
 
-      _lazyLoader: function() {
-        if (!this.loadComplete) {
-          Polymer.RenderStatus.afterNextRender(this, function() {
-            this.importHref(this.resolveUrl('lazy-load.html'), function() {
-              this._installServiceWorker(this.$.toast);
-              this.loadComplete = true;
-            });
-          });
-        }
-      },
-
       _installServiceWorker: function(toast) {
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
@@ -162,7 +152,7 @@
         var resolvedPageUrl = this.resolveUrl('view-' + page + '.html');
         this.importHref(resolvedPageUrl, function() {
           if (page === 'home') {
-            this._lazyLoader();
+            this._installServiceWorker();
           }
         }, this._showPage404, true);
       },
