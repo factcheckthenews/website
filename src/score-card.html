@@ -31,13 +31,12 @@
       </template>
 
       <template is="dom-if" if="{{ !result.error }}">
-        <p><label>Score:</label>
+        <p><label>Result:</label>
           <template is="dom-if" if="{{ !_isUnknown(result.criteria.webOfTrust.description) }}">
-            There is a {{ result.score }}% chance that this is a credible source of information.
+            {{ _describe(result.score) }}
           </template>
           <template is="dom-if" if="{{ _isUnknown(result.criteria.webOfTrust.description) }}">
-            ⚠️️ This website has no reputation data, so an accurate score could not be calculated.
-            Based on available data, there is a {{ result.score }}% chance that this is credible source of information.
+            ⚠️️ This website has no reputation data, so credibility could not be calculated.
           </template>
         </p>
 
@@ -210,6 +209,15 @@
       },
       _displayWOTCategories: function(categories) {
         return (categories && categories.length > 0);
+      },
+      _describe: function(score) {
+        if (score > 80) {
+          return "This source is probably credible. 👍";
+        } else if (score > 70) {
+          return "This might be credible, but always check your sources. 👀";
+        } else {
+          return "You should be skeptical of this source. 🤔";
+        };
       },
       _isUnknown: function(description) {
         return (description === "Unknown");
